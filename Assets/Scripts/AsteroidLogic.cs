@@ -11,21 +11,5 @@ public class AsteroidLogic : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //if (transform.position.x > MapSetup.bounds.x)
-        //{
-        //    transform.position = new Vector3(-MapSetup.bounds.x, transform.position.y, transform.position.z);
-        //}
-        //if (transform.position.x < -MapSetup.bounds.x)
-        //{
-        //    transform.position = new Vector3(MapSetup.bounds.x, transform.position.y, transform.position.z);
-        //}
-        //if (transform.position.y > MapSetup.bounds.y)
-        //{
-        //    transform.position = new Vector3(transform.position.y, -MapSetup.bounds.y, transform.position.z);
-        //}
-        //if (transform.position.y < -MapSetup.bounds.y)
-        //{
-        //    transform.position = new Vector3(-transform.position.y, -MapSetup.bounds.y, transform.position.z);
-        //}
     }
 }

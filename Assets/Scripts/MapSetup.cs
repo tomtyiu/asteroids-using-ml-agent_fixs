@@ -27,7 +27,7 @@ public class MapSetup : MonoBehaviour
     {
         if (Time.time > nextSpawn)
         {
-            CreateAsteroid(5, asteroid);
+            //CreateAsteroid(5, asteroid);
             nextSpawn = Time.time + spawnRate;
         }
     }
