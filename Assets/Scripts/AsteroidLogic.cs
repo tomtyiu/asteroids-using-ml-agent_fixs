@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class AsteroidLogic : MonoBehaviour
 {
-    private SpriteRenderer map;
-    private void Start()
-    {
-        map = GetComponentInParent<SpriteRenderer>();
-    }
+    public SpriteRenderer map;
     private void Update()
     {
-        //if (transform.position.x > map.bounds.extents.x || transform.position.x < -map.bounds.extents.x || transform.position.y > map.bounds.extents.y || transform.position.y < -map.bounds.extents.y)
-        //{
-        //    Destroy(gameObject);
-        //}
+        if (transform.localPosition.x > map.bounds.extents.x || transform.localPosition.x < -map.bounds.extents.x || transform.localPosition.y > map.bounds.extents.y || transform.localPosition.y < -map.bounds.extents.y)
+        {
+            Destroy(gameObject);
+        }
         //if (transform.position.x > MapSetup.bounds.x)
         //{
         //    transform.position = new Vector3(-MapSetup.bounds.x, transform.position.y, transform.position.z);
