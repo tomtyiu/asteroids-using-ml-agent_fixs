@@ -70,8 +70,17 @@ public class MapSetup : MonoBehaviour
             }
             // Pick random values for x and y, that are within the map
 
-            // Applies normalization, to convert vector magnitude to 1, so that coordinates wouldn't affect the stength of force
-            Vector2 direction = new Vector2(randX, randY).normalized;
+            
+            Vector2 direction;
+            if (Random.Range(0,2) == 0)
+            {
+                // Applies normalization, to convert vector magnitude to 1, so that coordinates wouldn't affect the stength of force
+                direction = new Vector2(randX + Random.Range(-dimensions.x / 2, dimensions.x / 2), randY).normalized;
+            }
+            else
+            {
+                direction = new Vector2(randX, randY + Random.Range(-dimensions.y / 2, dimensions.y / 2)).normalized;
+            }
             // Turn values from 0,0 centered to transform.position centered.
             GameObject f = Instantiate(type, new Vector2(randX + transform.parent.position.x, randY + transform.parent.position.y), Quaternion.identity);
             int asteroidSize = Random.Range(3, 6);
