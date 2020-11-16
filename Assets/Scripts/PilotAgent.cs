@@ -7,15 +7,13 @@ using Unity.MLAgents.Sensors;
 public class PilotAgent : Agent
 {
     private MapSetup map;
-    private SpriteRenderer mapSr;
-    private float turnSpeed = 500f;
-    private float moveSpeed = 5f;
+    private readonly float turnSpeed = 500f;
+    private readonly float moveSpeed = 5f;
     private Rigidbody2D rBody;
     void Awake()
     {
         rBody = GetComponent<Rigidbody2D>();
         map = transform.parent.Find("Map(Clone)").GetComponent<MapSetup>();
-        mapSr = map.GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
@@ -54,15 +52,19 @@ public class PilotAgent : Agent
         map.ClearAsteroids();
         EndEpisode();
     }
+    // Constraints the model to the map. Out of bounds dimension is changed to its negative value.
     private void Constraints()
-    {  
-        if (transform.localPosition.x > mapSr.bounds.extents.x - map.margin || transform.localPosition.x < -1 * (mapSr.bounds.extents.x - map.margin))
+    {
+        // divided by 2, to get the extents.
+        Vector2 bounds = new Vector2(MapSetup.dimensions.x / 2, MapSetup.dimensions.y / 2);
+        Vector2 ltpos = new Vector2(transform.localPosition.x, transform.localPosition.y);
+        if (ltpos.x > bounds.x || ltpos.x < -1 * (bounds.x))
         {
-            transform.localPosition = new Vector3(transform.localPosition.x * -1,transform.localPosition.y,transform.localPosition.z);
+            transform.localPosition = new Vector3(ltpos.x * -1, ltpos.y, transform.localPosition.z);
         }
-        if (transform.localPosition.y > mapSr.bounds.extents.y - map.margin || transform.localPosition.y < -1 * (mapSr.bounds.extents.y - map.margin))
+        if (ltpos.y > bounds.y || ltpos.y < -1 * (bounds.y))
         {
-            transform.localPosition = new Vector3(transform.localPosition.x, -1 * transform.localPosition.y, transform.localPosition.z);
+            transform.localPosition = new Vector3(ltpos.x, -1 * ltpos.y, transform.localPosition.z);
         }
     }
 }

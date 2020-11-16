@@ -14,9 +14,10 @@ public class ArenaSetup : MonoBehaviour
         ship = Instantiate(ship, transform);
         asteroidsContainer = new GameObject("Asteroids");
         asteroidsContainer.transform.parent = gameObject.transform;
+        asteroidsContainer.transform.localPosition = Vector3.zero;
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(transform.position, new Vector3(MapSetup.dimensions.x, MapSetup.dimensions.y, 0));
+        Gizmos.DrawCube(transform.position, new Vector3(MapSetup.dimensions.x + MapSetup.margin, MapSetup.dimensions.y + MapSetup.margin, 0));
     }
 }
