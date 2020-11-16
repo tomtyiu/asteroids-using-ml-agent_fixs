@@ -153,6 +153,8 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  projectile: {fileID: 1074375114986754971, guid: 4b976da1659b77f4597e1414c1277b06,
+    type: 3}
 --- !u!114 &7553094636124834867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,12 +170,12 @@ MonoBehaviour:
   m_BrainParameters:
     VectorObservationSize: 3
     NumStackedVectorObservations: 2
-    VectorActionSize: 02000000
+    VectorActionSize: 03000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
-  m_Model: {fileID: 5022602860645237092, guid: d8f232ce24a6fe14b886d1b2de12ebd5, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 1
   m_BehaviorName: SpaceshipPilot
   TeamId: 0
   m_UseChildSensors: 1

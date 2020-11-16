@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ArenaSetup : MonoBehaviour
 {
     public GameObject map;
     public GameObject ship;
     private GameObject asteroidsContainer;
+    private GameObject projectileContainer;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +14,9 @@ public class ArenaSetup : MonoBehaviour
         asteroidsContainer = new GameObject("Asteroids");
         asteroidsContainer.transform.parent = gameObject.transform;
         asteroidsContainer.transform.localPosition = Vector3.zero;
+        projectileContainer = new GameObject("Projectiles");
+        projectileContainer.transform.parent = gameObject.transform;
+        projectileContainer.transform.localPosition = Vector3.zero;
     }
     private void OnDrawGizmos()
     {

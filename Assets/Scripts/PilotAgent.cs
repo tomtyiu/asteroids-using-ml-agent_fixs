@@ -6,10 +6,13 @@ using Unity.MLAgents.Sensors;
 
 public class PilotAgent : Agent
 {
+    public GameObject projectile;
     private MapSetup map;
     private readonly float turnSpeed = 500f;
     private readonly float moveSpeed = 5f;
     private Rigidbody2D rBody;
+    private float nextDamageEvent;
+    private readonly float attackInterval = 0.2f;
     void Awake()
     {
         rBody = GetComponent<Rigidbody2D>();
@@ -39,18 +42,25 @@ public class PilotAgent : Agent
         float accelerateAxis = Mathf.Abs(actions[1]);
         transform.Rotate(Vector3.forward, rotateAxis * Time.deltaTime * turnSpeed * -1);
         rBody.AddForce(transform.up * accelerateAxis * moveSpeed);
+        if (actions[2] == 1)
+        {
+            Shoot();
+        }
         AddReward(0.1f);
     }
     public override void Heuristic(float[] actionsOut)
     {
         actionsOut[0] = Input.GetAxis("Horizontal");
         actionsOut[1] = Input.GetAxis("Vertical");
-        //actionsOut[2] = Input.GetKey(KeyCode.Space) ? 1 : 0;
+        actionsOut[2] = Input.GetKey(KeyCode.Space) ? 1 : 0;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        map.ClearAsteroids();
-        EndEpisode();
+        if (collision.CompareTag("Asteroid"))
+        {
+            map.ClearAsteroids();
+            EndEpisode();
+        }
     }
     // Constraints the model to the map. Out of bounds dimension is changed to its negative value.
     private void Constraints()
@@ -65,6 +75,18 @@ public class PilotAgent : Agent
         if (ltpos.y > bounds.y || ltpos.y < -1 * (bounds.y))
         {
             transform.localPosition = new Vector3(ltpos.x, -1 * ltpos.y, transform.localPosition.z);
+        }
+    }
+    private void Shoot()
+    {
+
+        if (Time.time > nextDamageEvent)
+        {
+            GameObject p = Instantiate(projectile, transform.parent.Find("Projectiles"));
+            p.transform.position = transform.position;
+            p.transform.rotation = transform.rotation;
+            p.GetComponent<Rigidbody2D>().AddForce(transform.up * 50f, ForceMode2D.Impulse);
+            nextDamageEvent = Time.time + attackInterval;
         }
     }
 }
