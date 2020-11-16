@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MapSetup : MonoBehaviour
 {
+    [System.NonSerialized] public static readonly Vector2 dimensions = new Vector2(32f, 18f);
     public float margin = 2f;
     public float safeSquareExtent = 3f;
     public GameObject asteroid;
@@ -16,8 +17,8 @@ public class MapSetup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(GetComponentInParent<Transform>().position);
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        sr.size = dimensions;
         bounds.x = sr.bounds.extents.x - margin;
         bounds.y = sr.bounds.extents.y - margin;
     }
@@ -27,7 +28,7 @@ public class MapSetup : MonoBehaviour
     {
         if (Time.time > nextSpawn)
         {
-            //CreateAsteroid(5, asteroid);
+            CreateAsteroid(5, asteroid);
             nextSpawn = Time.time + spawnRate;
         }
     }
@@ -58,24 +59,18 @@ public class MapSetup : MonoBehaviour
             // Turn values from 0,0 centered to transform.position centered.
             GameObject f = Instantiate(type, new Vector2(randX + transform.parent.position.x, randY + transform.parent.position.y), Quaternion.identity);
             // Group asteroids under Arena
-            f.transform.parent = transform.parent;
+            f.transform.parent = transform.parent.Find("Asteroids");
             // Apply force between selected value and center of Arena
             //f.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-randX, transform.parent.position.x), Random.Range(-randY, transform.parent.position.y)).normalized * Random.Range(minAsteroidSpeed, maxAsteroidSpeed));
             f.GetComponent<Rigidbody2D>().AddForce(direction * Random.Range(minAsteroidSpeed, maxAsteroidSpeed) * -1);
         }
     }
-    public void ResetSpace(GameObject[] agents)
+    public void ClearAsteroids()
     {
-        foreach (GameObject agent in agents)
+        Transform asteroidTransform = transform.parent.Find("Asteroids");
+        foreach (Transform asteroid in asteroidTransform)
         {
-            if (agent.transform.parent == gameObject.transform)
-            {
-                agent.transform.position = gameObject.transform.position;
-                agent.transform.rotation = Quaternion.identity;
-            }
+            Destroy(asteroid.gameObject);
         }
-
-        //CreateFood(numFood, food);
-        //CreateFood(numBadFood, badFood);
     }
 }

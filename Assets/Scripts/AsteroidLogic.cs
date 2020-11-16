@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class AsteroidLogic : MonoBehaviour
 {
-    public SpriteRenderer map;
+
     private void Update()
     {
-        if (transform.localPosition.x > map.bounds.extents.x || transform.localPosition.x < -map.bounds.extents.x || transform.localPosition.y > map.bounds.extents.y || transform.localPosition.y < -map.bounds.extents.y)
+        if (transform.localPosition.x > MapSetup.dimensions.x || transform.localPosition.x < -MapSetup.dimensions.x || transform.localPosition.y > MapSetup.dimensions.y || transform.localPosition.y < -MapSetup.dimensions.y)
         {
             Destroy(gameObject);
         }

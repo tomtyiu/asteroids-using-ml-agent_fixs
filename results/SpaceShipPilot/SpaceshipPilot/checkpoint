@@ -1,0 +1,6 @@
+model_checkpoint_path: "SpaceshipPilot-2340410.ckpt"
+all_model_checkpoint_paths: "SpaceshipPilot-499996.ckpt"
+all_model_checkpoint_paths: "SpaceshipPilot-999972.ckpt"
+all_model_checkpoint_paths: "SpaceshipPilot-1499976.ckpt"
+all_model_checkpoint_paths: "SpaceshipPilot-1999976.ckpt"
+all_model_checkpoint_paths: "SpaceshipPilot-2340410.ckpt"

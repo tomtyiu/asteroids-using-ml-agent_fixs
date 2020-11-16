@@ -1,0 +1,47 @@
+{
+    "SpaceshipPilot": {
+        "checkpoints": [
+            {
+                "steps": 499996,
+                "file_path": "results\\SpaceShipPilot\\SpaceshipPilot\\SpaceshipPilot-499996.nn",
+                "reward": 41.28750020265579,
+                "creation_time": 1605398213.2659683
+            },
+            {
+                "steps": 999972,
+                "file_path": "results\\SpaceShipPilot\\SpaceshipPilot\\SpaceshipPilot-999972.nn",
+                "reward": 60.49999952316284,
+                "creation_time": 1605399138.7634702
+            },
+            {
+                "steps": 1499976,
+                "file_path": "results\\SpaceShipPilot\\SpaceshipPilot\\SpaceshipPilot-1499976.nn",
+                "reward": 21.100000381469727,
+                "creation_time": 1605400039.9344676
+            },
+            {
+                "steps": 1999976,
+                "file_path": "results\\SpaceShipPilot\\SpaceshipPilot\\SpaceshipPilot-1999976.nn",
+                "reward": 96.60000002384186,
+                "creation_time": 1605400971.4159672
+            },
+            {
+                "steps": 2340410,
+                "file_path": "results\\SpaceShipPilot\\SpaceshipPilot\\SpaceshipPilot-2340410.nn",
+                "reward": null,
+                "creation_time": 1605401601.9169688
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2340410,
+            "file_path": "results\\SpaceShipPilot\\SpaceshipPilot.nn",
+            "reward": null,
+            "creation_time": 1605401601.9169688
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.1.0",
+        "mlagents_version": "0.21.1",
+        "tensorflow_version": "2.3.1"
+    }
+}
