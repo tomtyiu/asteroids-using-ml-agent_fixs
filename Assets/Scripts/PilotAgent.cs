@@ -8,15 +8,15 @@ public class PilotAgent : Agent
 {
     public GameObject projectile;
     private MapSetup map;
-    private readonly float turnSpeed = 500f;
-    private readonly float moveSpeed = 5f;
+    private readonly float turnSpeed = 250f;
+    private readonly float moveSpeed = 25f;
     private Rigidbody2D rBody;
     private float nextDamageEvent;
     private readonly float attackInterval = 0.2f;
     void Awake()
     {
         rBody = GetComponent<Rigidbody2D>();
-        map = transform.parent.Find("Map(Clone)").GetComponent<MapSetup>();
+        map = transform.parent.GetComponentInChildren<MapSetup>();
     }
     private void Update()
     {
@@ -24,6 +24,8 @@ public class PilotAgent : Agent
     }
     public override void OnEpisodeBegin()
     {
+            // Reset the map
+            map.ClearAsteroids();
             // Reset the agent
             rBody.angularVelocity = 0;
             rBody.velocity = Vector2.zero;
@@ -31,33 +33,70 @@ public class PilotAgent : Agent
     }
     public override void CollectObservations(VectorSensor sensor)
     {
-            Vector2 localVelocity = transform.InverseTransformDirection(rBody.velocity);
-            sensor.AddObservation(localVelocity.x);
-            sensor.AddObservation(localVelocity.y);
-            sensor.AddObservation(transform.rotation.z);
+        Vector2 localVelocity = rBody.transform.InverseTransformDirection(rBody.velocity);
+        sensor.AddObservation(localVelocity.x);
+        sensor.AddObservation(localVelocity.y);
+        ////sensor.AddObservation(rBody.angularVelocity);
+        sensor.AddObservation(transform.localPosition.x / (MapSetup.dimensions.x / 2));
+        sensor.AddObservation(transform.localPosition.y / (MapSetup.dimensions.y / 2));
+        sensor.AddObservation(transform.rotation.z);
+        //foreach(GameObject asteroid in map.asteroids.Values)
+        //{
+        //    sensor.AddObservation(asteroid.activeSelf);
+        //    Rigidbody2D arBody = asteroid.GetComponent<Rigidbody2D>();
+        //    Vector2 alocalVelocity = arBody.transform.InverseTransformDirection(arBody.velocity);
+        //    sensor.AddObservation(alocalVelocity.x);
+        //    sensor.AddObservation(alocalVelocity.y);
+        //    // If agent only knows a directinal vector, but doesnt know the velocity of the asteroid, it can't accurately shoot.
+        //    //sensor.AddObservation(new Vector2(asteroid.transform.localPosition.x - transform.localPosition.x, asteroid.transform.localPosition.y - transform.localPosition.y));
+        //    sensor.AddObservation(asteroid.transform.localPosition.x / (MapSetup.dimensions.x / 2));
+        //    sensor.AddObservation(asteroid.transform.localPosition.y / (MapSetup.dimensions.y / 2));
+        //    sensor.AddObservation(asteroid.transform.localScale);
+        //}
     }
     public override void OnActionReceived(float[] actions)
     {
-        float rotateAxis = actions[0];
-        float accelerateAxis = Mathf.Abs(actions[1]);
-        transform.Rotate(Vector3.forward, rotateAxis * Time.deltaTime * turnSpeed * -1);
-        rBody.AddForce(transform.up * accelerateAxis * moveSpeed);
-        if (actions[2] == 1)
+        // Rotate
+        if (actions[0] == 1)
         {
+            transform.Rotate(Vector3.forward, Time.deltaTime * turnSpeed * -1);
+        }
+        else if (actions[0] == 2)
+        {
+            transform.Rotate(Vector3.forward, Time.deltaTime * turnSpeed);
+        }        
+        // Move forward
+        rBody.AddForce(transform.up * actions[1] * moveSpeed);
+        // Shoot
+        if ((int)actions[2] == 1)
+        {
+            GiveReward(-0.03f);
             Shoot();
         }
-        AddReward(0.1f);
+        GiveReward(0.01f);
     }
     public override void Heuristic(float[] actionsOut)
     {
-        actionsOut[0] = Input.GetAxis("Horizontal");
-        actionsOut[1] = Input.GetAxis("Vertical");
+        if (Input.GetKey(KeyCode.A))
+        {
+            actionsOut[0] = 2;
+        } 
+        else if (Input.GetKey(KeyCode.D))
+        {
+            actionsOut[0] = 1;
+        }
+        else
+        {
+            actionsOut[0] = 0;
+        }
+        actionsOut[1] = Input.GetKey(KeyCode.W) ? 1 : 0;
         actionsOut[2] = Input.GetKey(KeyCode.Space) ? 1 : 0;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Asteroid"))
         {
+            GiveReward(-1f);
             map.ClearAsteroids();
             EndEpisode();
         }
@@ -70,16 +109,17 @@ public class PilotAgent : Agent
         Vector2 ltpos = new Vector2(transform.localPosition.x, transform.localPosition.y);
         if (ltpos.x > bounds.x || ltpos.x < -1 * (bounds.x))
         {
-            transform.localPosition = new Vector3(ltpos.x * -1, ltpos.y, transform.localPosition.z);
+            GiveReward(-0.5f);
+            transform.localPosition = new Vector3(bounds.x * Mathf.Sign(ltpos.x) * -1, ltpos.y, transform.localPosition.z);
         }
         if (ltpos.y > bounds.y || ltpos.y < -1 * (bounds.y))
         {
-            transform.localPosition = new Vector3(ltpos.x, -1 * ltpos.y, transform.localPosition.z);
+            GiveReward(-0.5f);
+            transform.localPosition = new Vector3(ltpos.x, bounds.y * Mathf.Sign(ltpos.y) * -1, transform.localPosition.z);
         }
     }
     private void Shoot()
     {
-
         if (Time.time > nextDamageEvent)
         {
             GameObject p = Instantiate(projectile, transform.parent.Find("Projectiles"));
@@ -88,5 +128,9 @@ public class PilotAgent : Agent
             p.GetComponent<Rigidbody2D>().AddForce(transform.up * 50f, ForceMode2D.Impulse);
             nextDamageEvent = Time.time + attackInterval;
         }
+    }
+    public void GiveReward(float amount)
+    {
+        AddReward(amount);
     }
 }

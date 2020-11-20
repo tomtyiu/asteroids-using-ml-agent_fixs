@@ -7,9 +7,10 @@ public class ArenaSetup : MonoBehaviour
     private GameObject asteroidsContainer;
     private GameObject projectileContainer;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Instantiate(map, transform);
+
         ship = Instantiate(ship, transform);
         asteroidsContainer = new GameObject("Asteroids");
         asteroidsContainer.transform.parent = gameObject.transform;
@@ -20,6 +21,10 @@ public class ArenaSetup : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(transform.position, new Vector3(MapSetup.dimensions.x + MapSetup.margin, MapSetup.dimensions.y + MapSetup.margin, 0));
+        if (!Application.isPlaying)
+        {
+            Gizmos.DrawCube(transform.position, new Vector3(MapSetup.dimensions.x + MapSetup.margin, MapSetup.dimensions.y + MapSetup.margin, 0));
+        }
+        
     }
 }

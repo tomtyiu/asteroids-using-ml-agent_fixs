@@ -7,12 +7,15 @@ public class MapSetup : MonoBehaviour
     [System.NonSerialized] public static readonly Vector2 dimensions = new Vector2(32f, 18f);
     [System.NonSerialized] public static readonly float margin = 5f;
     private Vector2 safeSquareExtents = new Vector2(dimensions.x / 2, dimensions.y / 2);
+    public Dictionary<int, GameObject> asteroids = new Dictionary<int, GameObject>();
     public GameObject asteroid;
     private Vector2 bounds;
     private readonly float spawnRate = 3f;
     private float nextSpawn;
-    private readonly float minAsteroidSpeed = 35f;
-    private readonly float maxAsteroidSpeed = 200f;
+    private readonly float minAsteroidSpeed = 10f;
+    private readonly float maxAsteroidSpeed = 50f;
+    private readonly int numberOfAsteroids = 3;
+    public readonly int maxAsteroids = 200;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,7 @@ public class MapSetup : MonoBehaviour
         sr.size = dimensions;
         bounds.x = sr.bounds.extents.x + margin;
         bounds.y = sr.bounds.extents.y + margin;
+        InitializeAsteroids();
     }
 
     // Update is called once per frame
@@ -28,11 +32,22 @@ public class MapSetup : MonoBehaviour
     {
         if (Time.time > nextSpawn)
         {
-            CreateAsteroid(5, asteroid);
+            CreateAsteroid(numberOfAsteroids);
             nextSpawn = Time.time + spawnRate;
         }
     }
-    void CreateAsteroid(int num, GameObject type)
+    void InitializeAsteroids()
+    {
+        for(int i = 0; i < maxAsteroids; i++)
+        {
+            GameObject f = Instantiate(asteroid, new Vector3(0,0,500), Quaternion.identity);
+            asteroids.Add(f.GetHashCode(), f);
+            // Group asteroids under Arena
+            f.transform.parent = transform.parent.Find("Asteroids");
+            f.SetActive(false);
+        }
+    }
+    void CreateAsteroid(int num)
     {
         for (int i = 0; i < num; i++)
         {
@@ -81,22 +96,31 @@ public class MapSetup : MonoBehaviour
             {
                 direction = new Vector2(randX, randY + Random.Range(-dimensions.y / 2, dimensions.y / 2)).normalized;
             }
+            GameObject asteroidToSpawn = null;
+            foreach(GameObject asteroid in asteroids.Values)
+            {
+                if (!asteroid.activeSelf)
+                {
+                    asteroidToSpawn = asteroid;
+                    break;
+                }
+            }
             // Turn values from 0,0 centered to transform.position centered.
-            GameObject f = Instantiate(type, new Vector2(randX + transform.parent.position.x, randY + transform.parent.position.y), Quaternion.identity);
-            int asteroidSize = Random.Range(3, 6);
-            f.transform.localScale = new Vector3(asteroidSize, asteroidSize, 1);
-            // Group asteroids under Arena
-            f.transform.parent = transform.parent.Find("Asteroids");
-            // Apply force between selected value and center of Arena
-            f.GetComponent<Rigidbody2D>().AddForce(direction * Random.Range(minAsteroidSpeed, maxAsteroidSpeed) * -1);
+            if (asteroidToSpawn)
+            {
+                asteroidToSpawn.GetComponent<AsteroidLogic>().SpawnAsteroid(new Vector3(randX + transform.parent.position.x, randY + transform.parent.position.y, 0),
+                    direction, minAsteroidSpeed, maxAsteroidSpeed);
+
+            }
         }
     }
     public void ClearAsteroids()
     {
-        Transform asteroidTransform = transform.parent.Find("Asteroids");
-        foreach (Transform asteroid in asteroidTransform)
+        foreach(GameObject asteroid in asteroids.Values)
         {
-            Destroy(asteroid.gameObject);
+            asteroid.transform.position = new Vector3(0, 0, 500);
+            asteroid.SetActive(false);
+            asteroid.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }
 }

@@ -94,7 +94,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5e8a4b140f2c74aa14be95e2beeb2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  margin: 2
-  safeSquareExtent: 3
+  ship: {fileID: 0}
   asteroid: {fileID: 8849040336318920237, guid: a2055336d01c20f4696b6360ef6a871c,
     type: 3}

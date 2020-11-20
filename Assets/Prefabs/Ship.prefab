@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -911740914246086604}
   - component: {fileID: 7553094636124834867}
   - component: {fileID: -2303920245940040443}
-  - component: {fileID: 2182252325898863267}
+  - component: {fileID: -3338849548839188989}
   m_Layer: 9
   m_Name: Ship
   m_TagString: Untagged
@@ -101,7 +101,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -168,14 +168,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 3
-    NumStackedVectorObservations: 2
-    VectorActionSize: 03000000
+    VectorObservationSize: 5
+    NumStackedVectorObservations: 1
+    VectorActionSize: 030000000200000002000000
     VectorActionDescriptions: []
-    VectorActionSpaceType: 1
-  m_Model: {fileID: 0}
+    VectorActionSpaceType: 0
+  m_Model: {fileID: 5022602860645237092, guid: a13c7ee239e007e49b73b27435f66410, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: SpaceshipPilot
   TeamId: 0
   m_UseChildSensors: 1
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DecisionPeriod: 5
   TakeActionsBetweenDecisions: 1
---- !u!114 &2182252325898863267
+--- !u!114 &-3338849548839188989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,10 +208,10 @@ MonoBehaviour:
   m_SensorName: RayPerceptionSensor
   m_DetectableTags:
   - Asteroid
-  m_RaysPerDirection: 10
-  m_MaxRayDegrees: 180
-  m_SphereCastRadius: 1.5
-  m_RayLength: 20
+  m_RaysPerDirection: 20
+  m_MaxRayDegrees: 175
+  m_SphereCastRadius: 0
+  m_RayLength: 40
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 1024

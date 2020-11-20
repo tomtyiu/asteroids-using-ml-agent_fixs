@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 4596269828956520604, guid: 628064c893a8ce94591fae84e4dec5ad, type: 3}
-  ship: {fileID: 3623144968338542632, guid: 0fc783fde45267f4890b964fbb960d25, type: 3}
+  ship: {fileID: 3623144968338542632, guid: 2ee0ea77057cbc04eaf004e512386f58, type: 3}
