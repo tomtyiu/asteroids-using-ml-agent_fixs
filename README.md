@@ -65,5 +65,7 @@ reducing the reliability of the AI.
 ## Credits
 
 Spasheship by MillionthVector (http://millionthvector.blogspot.de)
+
 Asteroids by Jasper on OpeGameArt.org
+
 Background courtesy NASA/JPL-Caltech, Public domain, via Wikimedia Commons
