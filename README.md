@@ -27,7 +27,7 @@ And lastly, agents are of course given a negative reward for colliding with an a
 
 ## Agent Actions and Sensors
 
-There are 3 discrete Vector action branches being observed. 
+There are 3 discrete Vector action branches being observed.
 1st is rotation, rotate left, rotate right, do nothing.
 2nd is shooting, shoot, do nothing.
 3rd is Movement, move forwards, do nothing.
@@ -61,3 +61,9 @@ So these are the results.
 Graph shows the length of training episodes, with smoothing of 0.6.
 Ultimately, all of the runs suffered from the same problem, the results would gradually increase, but would also start to get more and more erratic,
 reducing the reliability of the AI.
+
+## Credits
+
+Spasheship by MillionthVector (http://millionthvector.blogspot.de)
+Asteroids by Jasper on OpeGameArt.org
+Background courtesy NASA/JPL-Caltech, Public domain, via Wikimedia Commons
