@@ -11,6 +11,7 @@ public class AsteroidLogic : MonoBehaviour
 
     private Rigidbody2D asteroidRigidbody;
     private SpriteRenderer asteroidSpriteRenderer;
+    [SerializeField] private ParticleSystem explosionPrefab;
     private void Awake()
     {
         ship = GameObject.FindGameObjectWithTag("Player").GetComponent<PilotAgent>();
@@ -33,7 +34,8 @@ public class AsteroidLogic : MonoBehaviour
         {
             if (health <= 0)
             {
-                transform.position = new Vector3(0, 0, 500);
+                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                //transform.position = new Vector3(0, 0, 500);
                 gameObject.SetActive(false);
                 asteroidRigidbody.velocity = Vector2.zero;
                 ship.GiveReward(0.50f);
