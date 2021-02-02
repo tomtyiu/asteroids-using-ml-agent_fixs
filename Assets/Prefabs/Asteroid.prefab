@@ -73,8 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 42b5c92a97125714e8eb7612761751f7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -133,3 +133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96faccebb2251f349bbeea3ab76efa70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  asteroidSprites:
+  - {fileID: 21300000, guid: 42b5c92a97125714e8eb7612761751f7, type: 3}
+  - {fileID: 21300000, guid: 0bd232f88f015e341a267cc4b4cb907c, type: 3}
+  - {fileID: 21300000, guid: 437b9fd5ff5db3a40aefee664408db8c, type: 3}
+  - {fileID: 21300000, guid: 7d207252fb6e3184381aa3b35349041f, type: 3}

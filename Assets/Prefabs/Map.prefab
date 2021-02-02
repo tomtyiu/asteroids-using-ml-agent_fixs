@@ -71,12 +71,12 @@ SpriteRenderer:
   m_SortingLayerID: -1410035123
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9b8596972e443a0408b56ef514c73c6f, type: 3}
-  m_Color: {r: 0.8956318, g: 0, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 06f3c60e47c4a084eaff0ec3255840b4, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 160, y: 90}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -94,6 +94,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5e8a4b140f2c74aa14be95e2beeb2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
   asteroid: {fileID: 8849040336318920237, guid: a2055336d01c20f4696b6360ef6a871c,
     type: 3}
