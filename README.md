@@ -1,5 +1,7 @@
 # ML-Agents Asteroids AI
 
+# [Video](https://ksimo.com/videos/asteroids.mp4)
+
 In this project I used ML-Agents to create an AI for a game similar to Atari Asteroids. I succeeded in training an AI, but the results are far from satisfactory.
 I have tried training the AI by giving it different sensors or even cheating by not using sensors at all, instead giving it parameters of the asteroids.
 In the end a raycast perception sensor 2d worked best. But the AI, is still doomed to fail eventually, even though it usually reaches a fairly good score.
