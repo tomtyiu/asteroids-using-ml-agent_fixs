@@ -36,10 +36,16 @@ public class PilotAgent : Agent
         Vector2 localVelocity = rBody.transform.InverseTransformDirection(rBody.velocity);
         sensor.AddObservation(localVelocity.x);
         sensor.AddObservation(localVelocity.y);
-        ////sensor.AddObservation(rBody.angularVelocity);
+        // Assuming rBody.velocity is a Vector3, normalize and add x, y components as observations
+        sensor.AddObservation(localVelocity.normalized.x);
+        sensor.AddObservation(localVelocity.normalized.y);
+        // Correct way to add rotation as observation
+        sensor.AddObservation(transform.localEulerAngles.x / 360.0f);
+        sensor.AddObservation(transform.localEulerAngles.y / 360.0f);
         sensor.AddObservation(transform.localPosition.x / (MapSetup.dimensions.x / 2));
         sensor.AddObservation(transform.localPosition.y / (MapSetup.dimensions.y / 2));
-        sensor.AddObservation(transform.rotation.z);
+        sensor.AddObservation(transform.localRotation.normalized);
+        
         //foreach(GameObject asteroid in map.asteroids.Values)
         //{
         //    sensor.AddObservation(asteroid.activeSelf);
